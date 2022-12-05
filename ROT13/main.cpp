@@ -3,8 +3,8 @@
 #include <sstream>
 
 bool fileOpen(std::string, std::ifstream&);
-void filePrint(std::ifstream&);
 void fileClose(std::ifstream&);
+std::string outFile(std::ifstream& f);
 std::string rot13(std::string);
 
 int main(){
@@ -26,14 +26,14 @@ int main(){
         break;
     case 2:
         if (isOpen){
-            filePrint(file);
+            message = outFile(file);
+            std::cout << rot13(message) << std::endl;
 
             fileClose(file);
         } else {
             std::cout << "Error!\n";
         }
     default:
-        
         break;
     }
 
@@ -48,17 +48,14 @@ bool fileOpen(std::string s, std::ifstream& f){
         return false;
 }
 
-void filePrint(std::ifstream& f){
-    // std::string s;
-    // while (f >> s)
-    // std::cout << s;
+std::string outFile(std::ifstream& f){
     std::stringstream buffer;
     buffer << f.rdbuf();
 
     std::string file_contents;
     file_contents = buffer.str();
-
-    std::cout << file_contents << std::endl;
+    
+    return file_contents;
 }
 
 void fileClose(std::ifstream& f){
