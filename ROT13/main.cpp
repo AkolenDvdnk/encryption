@@ -20,27 +20,22 @@ int main(){
         
         break;
     }
-    
+
     return 0;
 }
 
-std::string rot13(std::string text){
-    int i = 0;
-    std::string encrypt = "";
-
-    while (text[i]){
-        if (isupper(text[i])){
-            encrypt += (text[i] - 'A' + 13) % 26 + 'A';
-            i++;
-        } else if (islower(text[i])){
-            encrypt += (text[i] - 'a' + 13) % 26 + 'a';
-            i++;
-        } else if (text[i] == ' '){
-            encrypt += text[i];
-        } else{
-            encrypt += text[i];
-        }
-    }
-    
-    return encrypt;
+std::string rot13(std::string source)
+{
+	std::string transformed;
+	for (size_t i = 0; i < source.size(); i++) {
+		if (isalpha(source[i])) {
+			if ((tolower(source[i]) - 'a') < 14)
+				transformed.append(1, source[i] + 13);
+			else
+				transformed.append(1, source[i] - 13);
+		} else {
+			transformed.append(1, source[i]);
+		}
+	}
+	return transformed;
 }
